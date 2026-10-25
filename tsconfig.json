@@ -1,18 +1,11 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "preserve",
+    "module": "ESNext",
     "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "types": [
-      "node"
-    ],
+    "target": "ES2023",
     "strict": true,
-    "skipLibCheck": true,
     "esModuleInterop": true,
-    "outDir": "dist"
-  },
-  "include": [
-    "**/*.ts"
-  ]
+    "ignoreDeprecations": "6.0",
+    "types": ["node"]
+  }
 }

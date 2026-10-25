@@ -12,23 +12,26 @@
   },
   "license": "ISC",
   "author": "Alfonsus9",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "npm run",
     "run": "npm run dev",
-    "dev": "nodemon index.js",
-    "contract:emit": "prisma contract emit"
+    "dev": "nodemon index.js"
   },
   "dependencies": {
-    "@prisma/orm-postgres": "^8.0.0-rc.20",
+    "@prisma/adapter-pg": "^7.10.1",
+    "@prisma/client": "^7.10.1",
     "dotenv": "^18.0.9",
     "express": "^5.3.0",
-    "nodemon": "^1.14.10"
+    "nodemon": "^1.14.10",
+    "pg": "^8.23.1"
   },
   "devDependencies": {
-    "@prisma/cli-engine": "^0.9.0",
     "@types/node": "^26.6.5",
-    "prisma": "^8.0.0-rc.27"
+    "@types/pg": "^8.23.1",
+    "prisma": "^7.10.1",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
   }
 }
