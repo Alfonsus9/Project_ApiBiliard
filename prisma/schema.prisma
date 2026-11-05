@@ -7,18 +7,69 @@ datasource db {
   provider = "postgresql"
 }
 
-model User { 
-  id    Int     @id @default(autoincrement()) 
-  email String  @unique
-  name  String?
-  posts Post[]
-} 
+model Tenant {
+  id   String @id @default(uuid()) @map("ID_Tenant")
+  name String @map("Name")
+  api_key String @unique @map("Api_key")
+  users User[]
 
-model Post { 
-  id        Int     @id @default(autoincrement()) 
-  title     String
-  content   String?
-  published Boolean @default(false) 
-  author    User    @relation(fields: [authorId], references: [id]) 
-  authorId  Int
-} 
+  @@map("tenant")
+}
+
+model User {
+  id       String @id @default(uuid()) @map("ID_Private")
+  tenantId String @map("ID_Tenant")
+  email    String @unique @map("Email")
+  password String @map("Password")
+  username String @unique @map("Username_ID_Public")
+
+  tenant          Tenant           @relation(fields: [tenantId], references: [id])
+  userRoles       UserRole[]
+  userPermissions UserPermission[]
+
+  @@map("user")
+}
+
+model Role {
+  id           String  @id @default(uuid()) @map("ID_Role")
+  name         String  @map("Role_Name")
+  description  String? @map("Desc")
+  deleteSystem Boolean @default(false) @map("Delete_System")
+
+  userRoles UserRole[]
+
+  @@map("role")
+}
+
+model UserRole {
+  userId String @map("ID_PrivateU")
+  roleId String @map("ID_Role")
+
+  user   User @relation(fields: [userId], references: [id])
+  role   Role @relation(fields: [roleId], references: [id])
+
+  // Menggunakan composite key untuk junction table
+  @@id([userId, roleId])
+  @@map("user_role")
+}
+
+model Permission {
+  id     String @id @default(uuid()) @map("ID_Permission")
+  access String @map("Access")
+
+  userPermissions UserPermission[]
+
+  @@map("permission")
+}
+
+model UserPermission {
+  userId       String @map("ID_PrivateU")
+  permissionId String @map("ID_Permission")
+
+  user       User       @relation(fields: [userId], references: [id])
+  permission Permission @relation(fields: [permissionId], references: [id])
+
+  // Menggunakan composite key untuk junction table
+  @@id([userId, permissionId])
+  @@map("user_permission")
+}

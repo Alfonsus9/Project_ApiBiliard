@@ -1,8 +1,7 @@
-const express = require('express');
+import express from 'express';
 const app = express();
+import authRouter from './src/auth/auth.Router.js';
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+app.use('/auth', authRouter);
 
-module.exports = app;
+export default app;
