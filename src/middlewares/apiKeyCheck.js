@@ -12,6 +12,7 @@ export default function checkApiKey(req, res, next) {
             if (!apiKeyRecord) {
                 return sendErrorResponse(res, 401, 'Invalid API key');
             }
+            req.tenant = apiKeyRecord;
             next();
         })
         .catch(error => {
